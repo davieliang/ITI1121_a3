@@ -23,7 +23,7 @@ public class GameModel {
 
     //Column j, Row i
 	public boolean isON(int i, int j) {  
-        
+
         return board[i][j];
 	}
 

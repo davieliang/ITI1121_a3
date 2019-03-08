@@ -62,7 +62,7 @@ public class LightsOut {
         Queue<Solution> q  = new QueueImplementation<Solution>();
         ArrayList<Solution> solutions  = new ArrayList<Solution>();
 
-        q.enqueue(new Solution(width,height));
+        q.enqueue(new Solution(width, height, model));
         long start = System.currentTimeMillis();
         while(!q.isEmpty()){
             Solution s  = q.dequeue();

@@ -81,7 +81,6 @@ public class Q1Tests {
         System.out.println("\ntestShortest");
         GameModel model = new GameModel(2,2);
         runShortestSolverTest(model,4);
-        
         model = new GameModel(3,2);
         runShortestSolverTest(model,2);
 
