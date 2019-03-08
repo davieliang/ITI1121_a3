@@ -21,7 +21,7 @@ public class GameModel {
         return width;
 	}
 
-    //Column i, Row j
+    //Column j, Row i
 	public boolean isON(int i, int j) {  
         
         return board[i][j];
@@ -32,7 +32,7 @@ public class GameModel {
         board = new boolean[height][width];
     }
 
-    //Column j, Row i
+    //Column i, Row j
     public void set(int i, int j, boolean value) {
         
         board[j][i] = value;

@@ -1,7 +1,5 @@
 // UPDATE THIS FILE AS REQUIRED
 
-
-
 /**
  * The class <b>Solution</b> is used
  * to store a (partial) solution to the game
@@ -10,31 +8,13 @@
  */
 public class Solution {
 
-
-    /**
-     * our board. board[i][j] is true is in this
-     * solution, the cell (j,i) is tapped
-     */
-    private boolean[][] board;
-
-    /**
-     *  width of the game
-     */
-    private int width;
-
-    /**
-     * height of the game
-     */
-    private int height;
+    private GameModel model;
     
     /**
      * how far along have we constructed that solution.
      * values range between 0 and height*width-1
      */
     private int currentIndex;
-
-
-    private int numOfSolutions;
 
 
     /**
@@ -50,10 +30,7 @@ public class Solution {
      */
     public Solution(int width, int height) {
 
-        this.width = width;
-        this.height = height;
-
-        board = new boolean[height][width];
+        model = new GameModel(width, height);
         currentIndex = 0;
     }
 
@@ -67,15 +44,13 @@ public class Solution {
      */
      public Solution(Solution other) {
 
-        this.width = other.width;
-        this.height = other.height;
+        this.model = new GameModel(other.model.getWidth(), other.model.getHeight());
         this.currentIndex = other.currentIndex;
 
-        board = new boolean[height][width];
+        int width = this.model.getWidth();
 
-        for(int i = 0; i < currentIndex; i++){
-            board[i/width][i%width] = other.board[i/width][i%width];
-        } 
+        for(int i = 0; i < currentIndex; i++)
+            model.set(i%width, i/width, other.model.isON(i/width, i%width));
 
     }
 
@@ -102,17 +77,16 @@ public class Solution {
 
         Solution otherSolution = (Solution) other;
 
-        if(width != otherSolution.width ||
-            height != otherSolution.height ||
+        if(model.getWidth() != otherSolution.model.getWidth() ||
+            model.getHeight() != otherSolution.model.getHeight() ||
             currentIndex != otherSolution.currentIndex) {
             return false;
         }
 
-        for(int i = 0; i < height ; i++){
-            for(int j = 0; j < width; j++) {
-                if(board[i][j] != otherSolution.board[i][j]){
+        for(int i = 0; i < model.getHeight() ; i++){
+            for(int j = 0; j < model.getWidth(); j++) {
+                if(model.isON(i, j) != otherSolution.model.isON(i, j))
                     return false;
-                }
             }
         }
 
@@ -129,7 +103,7 @@ public class Solution {
     * true if the solution is fully specified
     */
     public boolean isReady(){
-        return currentIndex == width*height;
+        return currentIndex == model.getWidth() * model.getHeight();
     }
 
     /** 
@@ -151,12 +125,11 @@ public class Solution {
     */
     public void setNext(boolean nextValue) {
 
-        if(currentIndex >= width*height) {
+        if(currentIndex >= model.getWidth() * model.getHeight()) {
             System.out.println("Board already full");
             return;
         }
-        board[currentIndex/width][currentIndex%width] = nextValue;
-        currentIndex++;
+        model.set(currentIndex % model.getWidth(), currentIndex++ / model.getWidth(), nextValue);
     }
     
     /**
@@ -172,13 +145,13 @@ public class Solution {
     */
     public boolean isSuccessful(){
 
-        if(currentIndex < width*height) {
+        if(currentIndex < model.getWidth() * model.getHeight()) {
             System.out.println("Board not finished");
             return false;
         }
 
-        for(int i = 0; i < height ; i++){
-            for(int j = 0; j < width; j++) {
+        for(int i = 0; i < model.getHeight(); i++){
+            for(int j = 0; j < model.getWidth(); j++) {
                 if(!oddNeighborhood(i,j)){
                     return false;
                 }
@@ -202,30 +175,30 @@ public class Solution {
     */
     public boolean stillPossible(boolean nextValue) {
 
-        if(currentIndex >= width*height) {
+        if(currentIndex >= model.getWidth()*model.getHeight()) {
             System.out.println("Board already full");
             return false;
         }
 
-        int i = currentIndex/width;
-        int j = currentIndex%width;
-        boolean before = board[i][j];
+        int i = currentIndex/model.getWidth();
+        int j = currentIndex%model.getWidth();
+        boolean before = model.isON(i, j);
         boolean possible = true;
 
-        board[i][j] = nextValue;
+        model.set(j, i, nextValue);
         
         if((i > 0) && (!oddNeighborhood(i-1,j))){
             possible = false;
         }
-        if(possible && (i == (height-1))) {
+        if(possible && (i == (model.getHeight()-1))) {
             if((j > 0) && (!oddNeighborhood(i,j-1))){
                 possible = false;
             }
-            if(possible && (j == (width-1))&& (!oddNeighborhood(i,j))){
+            if(possible && (j == (model.getWidth()-1))&& (!oddNeighborhood(i,j))){
                 possible = false;            
             }
         }
-        board[i][j] = before;
+        model.set(j, i, before);
         return possible;
     }
 
@@ -245,8 +218,8 @@ public class Solution {
     public boolean finish(){
 
 
-        int i = currentIndex/width;
-        int j = currentIndex%width;
+        int i = currentIndex/model.getWidth();
+        int j = currentIndex%model.getWidth();
         
 /*
         if(i == 0 && height > 1) {
@@ -255,25 +228,25 @@ public class Solution {
         }
 */
 
-        while(currentIndex < height*width) {
-            if(i < height - 1 ) {
+        while(currentIndex < model.getHeight()*model.getWidth()) {
+            if(i < model.getHeight() - 1 ) {
                 setNext(!oddNeighborhood(i-1,j));
-                i = currentIndex/width;
-                j = currentIndex%width;
+                i = currentIndex/model.getWidth();
+                j = currentIndex%model.getWidth();
             } else { //last raw
                 if(j == 0){
                     setNext(!oddNeighborhood(i-1,j));
                 } else {
-                   if((height > 1) && oddNeighborhood(i-1,j) != oddNeighborhood(i,j-1)){
+                   if((model.getHeight() > 1) && oddNeighborhood(i-1,j) != oddNeighborhood(i,j-1)){
                      return false;
                    }
                    setNext(!oddNeighborhood(i,j-1));
                 } 
-                i = currentIndex/width;
-                j = currentIndex%width;
+                i = currentIndex/model.getWidth();
+                j = currentIndex%model.getWidth();
             }
         }
-        if(!oddNeighborhood(height-1,width-1)){
+        if(!oddNeighborhood(model.getHeight()-1,model.getWidth()-1)){
             return false;
         }
         // here we should return true because we could
@@ -295,9 +268,9 @@ public class Solution {
 
         int solutionCounter = 0;
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++)
-                solutionCounter += (board[i][j]) ? 1 : 0;
+        for (int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getWidth(); j++)
+                solutionCounter += model.isON(i, j) ? 1 : 0;
         }
 
         return solutionCounter;
@@ -309,25 +282,28 @@ public class Solution {
      */
 
     private boolean oddNeighborhood(int i, int j) {
+
+        int width = model.getWidth();
+        int height = model.getHeight();
         
         if(i < 0 || i > height - 1 || j < 0 || j > width - 1) {
             return false;
         }
 
         int total = 0;
-        if(board[i][j]){
+        if(model.isON(i, j)){
             total++;
         }
-        if((i > 0) && (board[i-1][j])) {
+        if((i > 0) && (model.isON(i - 1, j))) {
             total++;
         }
-        if((i < height -1 ) && (board[i+1][j])) {
+        if((i < height -1 ) && (model.isON(i + 1, j))) {
             total++;
         }
-        if((j > 0) && (board[i][j-1])) {
+        if((j > 0) && (model.isON(i, j - 1))) {
             total++;
         }
-        if((j < (width - 1)) && (board[i][j+1])) {
+        if((j < (width - 1)) && (model.isON(i, j + 1))) {
             total++;
         }
         return (total%2)== 1 ;                
@@ -340,7 +316,11 @@ public class Solution {
      *      the string representation
      */
     public String toString() {
+
+        int width = model.getWidth();
+        int height = model.getHeight();
         StringBuffer out = new StringBuffer();
+
         out.append("[");
         for(int i = 0; i < height; i++){
             out.append("[");
@@ -348,7 +328,7 @@ public class Solution {
                 if (j>0) {
                     out.append(",");
                 }
-                out.append(board[i][j]);
+                out.append(model.isON(i, j));
             }
             out.append("]"+(i < height -1 ? ",\n" :""));
         }
