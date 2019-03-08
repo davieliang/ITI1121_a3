@@ -54,9 +54,12 @@ public class LightsOut {
      *  an instance of <b>ArrayList&lt;Solution&gt;</b>
      * containing all the solutions
      */
-    public static ArrayList<Solution> solve(int width, int height){
+    public static ArrayList<Solution> solve(GameModel model){
 
-        SolutionQueue q  = new ArrayListSolutionQueue();
+        int width = model.getWidth();
+        int height = model.getHeight();
+
+        Queue<Solution> q  = new QueueImplementation<Solution>();
         ArrayList<Solution> solutions  = new ArrayList<Solution>();
 
         q.enqueue(new Solution(width,height));
@@ -92,57 +95,21 @@ public class LightsOut {
         return solutions;
     }
 
+    public static Solution solveShortest(GameModel model) {
 
-    /**
-     * <b>main</b> method  calls the method <b>solve</b> 
-     * and then prints out the number of solutions found,
-     * as well as the details of each solution.
-     *
-     * The <b>width</b> and <b>height</b> used by the 
-     * main are passed as runtime parameters to
-     * the program. If no runtime parameters are passed 
-     * to the program, or if the parameters are incorrect,
-     * then the default values are used.
-     *
-     * @param args
-     *  Strings array of runtime parameters
-     */
-    public static void main(String[] args) {
+        ArrayList<Solution> solutions = solve(model);
 
+        if (solutions.isEmpty())
+            return null;
 
-        int width   = DEFAULT_WIDTH;
-        int height  = DEFAULT_HEIGHT;
+        Solution min = solutions.get(0);
 
-        StudentInfo.display();
-
-        if (args.length == 2) {
-
-            try{
-                width = Integer.parseInt(args[0]);
-                if(width < 1) {
-                    System.out.println("Invalid width, using default...");
-                    width   = DEFAULT_WIDTH;
-                }
-                height = Integer.parseInt(args[1]);
-                if(height < 1) {
-                    System.out.println("Invalid height, using default...");
-                    height  = DEFAULT_HEIGHT;
-                }
-                
-            } catch(NumberFormatException e){
-                System.out.println("Invalid argument, using default...");
-                width   = DEFAULT_WIDTH;
-                height  = DEFAULT_HEIGHT;
-            }
+        for (int i = 0; i < solutions.size(); i++) {
+            if (solutions.get(i).getSize() < min.getSize())
+                min = solutions.get(i);
         }
-        ArrayList<Solution> results   = solve(width,height);
-        for(int i =0; i < results.size(); i++){
 
-            System.out.println("****");
-            System.out.println(results.get(i));
-
-        }
-        System.out.println("In a board of "+ width + "x" + height +": " + results.size() + " solution" + (results.size() > 1 ? "s." : "."));
+        return min;
 
     }
 }

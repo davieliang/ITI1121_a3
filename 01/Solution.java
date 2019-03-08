@@ -297,7 +297,7 @@ public class Solution {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++)
-                solutionCounter += board[i][j] ? 1 : 0;
+                solutionCounter += (board[i][j]) ? 1 : 0;
         }
 
         return solutionCounter;
