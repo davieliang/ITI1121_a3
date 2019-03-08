@@ -1,4 +1,3 @@
-
 // UPDATE THIS FILE AS REQUIRED
 
 
@@ -35,6 +34,8 @@ public class Solution {
     private int currentIndex;
 
 
+    private int numOfSolutions;
+
 
     /**
      * Constructor. Creates an instance of Solution 
@@ -54,7 +55,6 @@ public class Solution {
 
         board = new boolean[height][width];
         currentIndex = 0;
-
     }
 
    /**
@@ -289,6 +289,18 @@ public class Solution {
        
         return true;
 
+    }
+
+    public int getSize() {
+
+        int solutionCounter = 0;
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++)
+                solutionCounter += board[i][j] ? 1 : 0;
+        }
+
+        return solutionCounter;
     }
 
     /**
