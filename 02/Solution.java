@@ -231,18 +231,6 @@ public class Solution {
         return possible;
     }
 
-    public int getSize() {
-
-        int counter = 0;
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++)
-                counter += board[i][j] ? 1 : 0;
-        }
-
-        return counter;
-    }
-
 
     /**
     * this method attempts to finish the board. 
@@ -360,6 +348,25 @@ public class Solution {
         }
         out.append("]");
         return out.toString();
+    }
+
+    //////////////////////////////////////
+
+    public int getSize() {
+
+        int counter = 0;
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++)
+                counter += board[i][j] ? 1 : 0;
+        }
+
+        return counter;
+    }
+
+    public boolean get(int i, int j) {
+
+        return board[j][i];
     }
 
 }
