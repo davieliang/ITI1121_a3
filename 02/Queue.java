@@ -1,4 +1,7 @@
 public interface Queue<E> {
- 
- // YOUR CODE HERE
+
+    public boolean isEmpty();
+    public void enqueue(E elem);
+    public E dequeue();
+
 }

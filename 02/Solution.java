@@ -1,8 +1,4 @@
 
-// UPDATE THIS FILE AS REQUIRED
-
-
-
 /**
  * The class <b>Solution</b> is used
  * to store a (partial) solution to the game
@@ -34,6 +30,10 @@ public class Solution {
      */
     private int currentIndex;
 
+    /*
+     * Model to obtain previous on/off states
+     */
+    private GameModel model;
 
 
     /**
@@ -47,7 +47,7 @@ public class Solution {
      * @param height
      *  the height of the board
      */
-    public Solution(int width, int height) {
+    public Solution(int width, int height, GameModel model) {
 
         this.width = width;
         this.height = height;
@@ -55,6 +55,7 @@ public class Solution {
         board = new boolean[height][width];
         currentIndex = 0;
 
+        this.model = model;
     }
 
    /**
@@ -70,6 +71,7 @@ public class Solution {
         this.width = other.width;
         this.height = other.height;
         this.currentIndex = other.currentIndex;
+        this.model = other.model;
 
         board = new boolean[height][width];
 
@@ -229,6 +231,18 @@ public class Solution {
         return possible;
     }
 
+    public int getSize() {
+
+        int counter = 0;
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++)
+                counter += board[i][j] ? 1 : 0;
+        }
+
+        return counter;
+    }
+
 
     /**
     * this method attempts to finish the board. 
@@ -303,6 +317,10 @@ public class Solution {
         }
 
         int total = 0;
+
+        if (model.isON(i, j)) {
+            total++;
+        }
         if(board[i][j]){
             total++;
         }
@@ -345,4 +363,3 @@ public class Solution {
     }
 
 }
-
