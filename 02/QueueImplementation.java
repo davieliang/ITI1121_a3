@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class QueueImplementation<E> implements Queue<E> {
 
@@ -19,7 +20,7 @@ public class QueueImplementation<E> implements Queue<E> {
 
     public E dequeue() {
     	if (array.isEmpty())
-    		throw  new NoSuchElementException();
+    		throw new NoSuchElementException();
         return array.remove(0);
     }
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class QueueImplementation<E> implements Queue<E> {
 
@@ -13,10 +14,13 @@ public class QueueImplementation<E> implements Queue<E> {
     }
 
     public void enqueue(E elem) {
-        array.add(elem);
+		if (elem != null)
+        	array.add(elem);
     }
 
     public E dequeue() {
+		if (array.isEmpty())
+			throw new NoSuchElementException();
         return array.remove(0);
     }
 
