@@ -16,7 +16,8 @@ import java.awt.event.ItemEvent;
 
 public class GameController implements ActionListener, ItemListener {
 
-    // YOUR VARIABLES HERE
+    private GameModel model;
+    private GameView view;
 
     /**
      * Constructor used for initializing the controller. It creates the game's view 
@@ -29,7 +30,8 @@ public class GameController implements ActionListener, ItemListener {
      */
     public GameController(int width, int height) {
 
-        // YOUR CODE HERE
+        model = new GameModel(width, height);
+        view = new GameView(this.model, this);
     }
 
 
@@ -42,9 +44,23 @@ public class GameController implements ActionListener, ItemListener {
      */
 
     public void actionPerformed(ActionEvent e) {
-        
-        // YOUR CODE HERE
 
+        switch (e.getActionCommand()) {
+
+            case "Reset":
+                model.reset();
+                break;
+            case "Random":
+                model.randomize();
+                break;
+            case "Quit":
+                System.exit(0);
+                break;
+            default:
+                System.err.println("Unknown Command: " + e.getActionCommand());
+                System.exit(0);
+                break;
+        }
     }
 
     /**

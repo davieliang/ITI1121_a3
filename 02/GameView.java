@@ -1,6 +1,6 @@
 import javax.swing.*;
-
-// your other import here if needed
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * The class <b>GameView</b> provides the current view of the entire Game. It extends
@@ -13,7 +13,10 @@ import javax.swing.*;
 public class GameView extends JFrame {
 
     // your variables here
-
+    private GameModel model;
+    private GridButton[][] buttonMatrix;
+    private int h;
+    private int w;
 
     /**
      * Constructor used for initializing the Frame
@@ -26,8 +29,40 @@ public class GameView extends JFrame {
 
     public GameView(GameModel gameModel, GameController gameController) {
 
-        // YOUR CODE HERE
+        this.w = gameModel.getWidth();
+        this.h = gameModel.getHeight();
+        this.model = gameModel;
+        this.buttonMatrix = new GridButton[h][w];
 
+        //Reset button
+        JButton reset = new JButton("Reset");
+        reset.addActionListener(gameController);
+        add(reset);
+
+        //Random button
+        JButton random = new JButton("Random");
+        random.addActionListener(gameController);
+        add(random);
+
+        //Quit button
+        JButton quit = new JButton("Quit");
+        quit.addActionListener(gameController);
+        add(quit);
+
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+
+            }
+        }
+
+        //setup
+        setLayout(new GridLayout(w, h));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setSize(800, 600);
+
+        //display the window
+        setVisible(true);
     }
 
     /**
@@ -51,6 +86,7 @@ public class GameView extends JFrame {
     public boolean solutionShown(){
 
         // YOUR CODE HERE
+        return true;
 
     }
 

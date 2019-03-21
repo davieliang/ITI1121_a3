@@ -80,19 +80,20 @@ public class GameModel {
 
     public void randomize() {
 
-    	ArrayList<Solution> solutions;
+    	solution = null;
 
     	do {
-    		reset();
+
+            numOfClicks = 0;
 
     		for (int i = 0; i < height; i++) {
     			for (int j = 0; j < width; j++)
     				board[i][j] = (int)(Math.random() * 2) == 1;
     		}
 
-    		solutions = LightsOut.solve(this);
+    		setSolution();
 
-    	} while (!solutions.isEmpty());
+    	} while (solution == null);
     }
 
     public void setSolution() {

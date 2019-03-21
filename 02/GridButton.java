@@ -1,9 +1,11 @@
-// YOUR IMPORT HERE
+import javax.swing.*;
 
 public class GridButton extends JButton {
 
 
     // YOUR VARIABLES HERE
+    private int column;
+    private int row;
 
 
     /**
@@ -18,7 +20,8 @@ public class GridButton extends JButton {
 
     public GridButton(int column, int row) {
 
-        // YOUR CODE HERE
+        this.column = column;
+        this.row = row;
     }
 
    /**
@@ -29,8 +32,6 @@ public class GridButton extends JButton {
     * tapped in the model's current solution
     */ 
     public void setState(boolean isOn, boolean isClicked) {
-
-        // YOUR CODE HERE
 
     }
 
@@ -43,7 +44,7 @@ public class GridButton extends JButton {
      */
 
     public int getRow() {
-        // YOUR CODE HERE
+        return row;
     }
 
     /**
@@ -53,7 +54,7 @@ public class GridButton extends JButton {
      */
 
     public int getColumn() {
-        // YOUR CODE HERE
+        return column;
     }
 
     // YOUR OTHER METHODS HERE

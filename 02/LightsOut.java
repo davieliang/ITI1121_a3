@@ -68,7 +68,7 @@ public class LightsOut {
             Solution s  = q.dequeue();
             if(s.isReady()){
                 // by construction, it is successfull
-                System.out.println("Solution found in " + (System.currentTimeMillis()-start) + " ms" );
+                //System.out.println("Solution found in " + (System.currentTimeMillis()-start) + " ms" );
                 solutions.add(s);
             } else {
                 boolean withTrue = s.stillPossible(true);
@@ -111,5 +111,33 @@ public class LightsOut {
 
         return min;
 
+    }
+
+    public static void main(String[] args) {
+
+        int width   = DEFAULT_WIDTH;
+        int height  = DEFAULT_HEIGHT;
+ 
+        StudentInfo.display();
+
+        if (args.length == 2) {
+            try{
+                width = Integer.parseInt(args[0]);
+                if(width<1){
+                    System.out.println("Invalid argument, using default...");
+                    width = DEFAULT_WIDTH;
+                }
+                height = Integer.parseInt(args[1]);
+                if(height<1){
+                    System.out.println("Invalid argument, using default...");
+                    height = DEFAULT_HEIGHT;
+                }
+            } catch(NumberFormatException e){
+                System.out.println("Invalid argument, using default...");
+                width   = DEFAULT_WIDTH;
+                height  = DEFAULT_HEIGHT;
+            }
+        }
+        GameController game = new GameController(width, height);
     }
 }
