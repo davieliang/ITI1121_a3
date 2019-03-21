@@ -56,13 +56,11 @@ public class GameController implements ActionListener, ItemListener {
                 System.exit(0);
                 break;
             default:
-                if (e.getActionCommand().length() == 3 && e.getActionCommand().charAt(1) == ':') {
+                if (e.getActionCommand().charAt(0) == '#') { //simple verification
 
-                    int row = Character.getNumericValue(e.getActionCommand().charAt(0));
-                    int col = Character.getNumericValue(e.getActionCommand().charAt(2));
-
-                    //System.out.println(row + ":" + col); // MODIFY THIS
-                    model.click(row, col);
+                    int[] pos = obtainCoordinates(e.getActionCommand());
+                    System.out.println(pos[0] + ":" + pos[1]); // MODIFY THIS
+                    model.click(pos[0], pos[1]);
 
                 } else {
  
@@ -91,6 +89,26 @@ public class GameController implements ActionListener, ItemListener {
             model.setSolution();
 
         System.out.println("Checkbox: " + solutionMode);
+    }
+
+    //used to extract 2 integers from button actioncommand
+    private int[] obtainCoordinates(String str) {
+
+        int pos[] = {0, 0};
+
+        for (int i = 1; i < str.length(); i++) {
+
+            if (str.charAt(i) == ':') {
+
+                String row = str.substring(1, i);
+                String col = str.substring(i + 1, str.length());
+                pos[0] = Integer.parseInt(row);
+                pos[1] = Integer.parseInt(col);
+                break;
+            }
+        }
+
+        return pos;
     }
 
 }
