@@ -15,6 +15,7 @@ public class GameModel {
 		this.height = height;
 		board = new boolean[height][width];
 		numOfClicks = 0;
+        setSolution();
 	}
 
 	public int getHeight() {
@@ -88,7 +89,7 @@ public class GameModel {
 
     		for (int i = 0; i < height; i++) {
     			for (int j = 0; j < width; j++)
-    				board[i][j] = (int)(Math.random() * 2) == 1;
+                    set(j, i, (int)(Math.random() * 2) == 1);
     		}
 
     		setSolution();
@@ -101,6 +102,7 @@ public class GameModel {
     	solution = LightsOut.solveShortest(this);
     }
 
+    //row i column j
     public boolean solutionSelects(int i, int j) {
 
     	return solution != null && solution.get(j, i);

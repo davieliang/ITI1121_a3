@@ -1,3 +1,7 @@
+TO DO LIST:
+- 02: improve GUI
+- 02: Controller: Improve getCommand() to recieve ints > 10
+
 ITI 1121
 Melvin Sam, 300090867, A04
 Christian Cook, 300083211, A03 

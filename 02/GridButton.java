@@ -1,11 +1,15 @@
+import java.awt.*;
 import javax.swing.*;
 
 public class GridButton extends JButton {
 
-
-    // YOUR VARIABLES HERE
     private int column;
     private int row;
+
+    private static final String ON_NO_SOLUTION = "Icons/Light-0.png";
+    private static final String OFF_NO_SOLUTION = "Icons/Light-1.png";
+    private static final String ON_WITH_SOLUTION = "Icons/Light-2.png";
+    private static final String OFF_WITH_SOLUTION = "Icons/Light-3.png";
 
 
     /**
@@ -20,8 +24,10 @@ public class GridButton extends JButton {
 
     public GridButton(int column, int row) {
 
+        setActionCommand("" + row + ":" + column + "");
         this.column = column;
         this.row = row;
+        setIcon(new ImageIcon(OFF_NO_SOLUTION));
     }
 
    /**
@@ -33,6 +39,14 @@ public class GridButton extends JButton {
     */ 
     public void setState(boolean isOn, boolean isClicked) {
 
+        if (!isOn && !isClicked)
+            setIcon(new ImageIcon(OFF_NO_SOLUTION));
+        if (isOn && !isClicked)
+            setIcon(new ImageIcon(ON_NO_SOLUTION));
+        if (!isOn && isClicked)
+            setIcon(new ImageIcon(OFF_WITH_SOLUTION));
+        if (isOn && isClicked)
+            setIcon(new ImageIcon(ON_WITH_SOLUTION));
     }
 
  
@@ -56,6 +70,4 @@ public class GridButton extends JButton {
     public int getColumn() {
         return column;
     }
-
-    // YOUR OTHER METHODS HERE
 }

@@ -364,6 +364,7 @@ public class Solution {
         return counter;
     }
 
+    //row j column i
     public boolean get(int i, int j) {
 
         return board[j][i];
