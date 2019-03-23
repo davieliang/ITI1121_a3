@@ -69,6 +69,7 @@ public class GameController implements ActionListener, ItemListener {
                 break;
         }
 
+        model.setSolution();
         view.update();
     }
 

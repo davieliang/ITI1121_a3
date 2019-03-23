@@ -73,7 +73,6 @@ public class GameView extends JFrame {
         //Label for number of steps
         numOfStepsLabel = new JLabel("Number of steps: 0");
 
-
         //Graphical Setup
         buttonsPanel.setLayout(new GridLayout(h, w));
         optionPanel.setLayout(new GridLayout(4, 1));
@@ -97,7 +96,6 @@ public class GameView extends JFrame {
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
                 buttonMatrix[i][j].setState(model.isON(i, j), solutionShown() && model.solutionSelects(i, j));
-                model.setSolution();
             }
         }
 
