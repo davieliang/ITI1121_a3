@@ -1,3 +1,6 @@
+RUN GAME:
+- 02: In 02 directory, run java *.java and then javac Lightsout <number of rows> <number of columns>
+
 TO DO LIST:
 - 02: improve GUI
 
