@@ -16,9 +16,9 @@ public class GameView extends JFrame {
     private GameModel model;
     private int h;
     private int w;
-    private boolean solutionMode;
     private GridButton[][] buttonMatrix;
     private JLabel numOfStepsLabel;
+    private JCheckBox checkbox;
 
     /**
      * Constructor used for initializing the Frame
@@ -35,7 +35,6 @@ public class GameView extends JFrame {
         this.w = gameModel.getWidth();
         this.h = gameModel.getHeight();
         this.model = gameModel;
-        this.solutionMode = false;
         this.buttonMatrix = new GridButton[h][w];
 
         //Panel
@@ -52,7 +51,7 @@ public class GameView extends JFrame {
         optionPanel.add(random);
 
         //Solution checkbox
-        JCheckBox checkbox = new JCheckBox("Solution");
+        checkbox = new JCheckBox("Solution");
         checkbox.addItemListener(gameController);
         optionPanel.add(checkbox);
 
@@ -96,8 +95,10 @@ public class GameView extends JFrame {
     public void update(){
 
         for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++)
-                buttonMatrix[i][j].setState(model.isON(i, j), solutionMode && model.solutionSelects(i, j));
+            for (int j = 0; j < w; j++) {
+                buttonMatrix[i][j].setState(model.isON(i, j), solutionShown() && model.solutionSelects(i, j));
+                model.setSolution();
+            }
         }
 
         numOfStepsLabel.setText("Number of steps: " + model.getNumberOfSteps());
@@ -129,9 +130,7 @@ public class GameView extends JFrame {
 
     public boolean solutionShown(){
 
-        // YOUR CODE HERE
-        return solutionMode;
-
+        return checkbox.isSelected();
     }
 
 }

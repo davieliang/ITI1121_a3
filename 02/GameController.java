@@ -59,7 +59,6 @@ public class GameController implements ActionListener, ItemListener {
                 if (e.getActionCommand().charAt(0) == '#') { //simple verification
 
                     int[] pos = obtainCoordinates(e.getActionCommand());
-                    System.out.println(pos[0] + ":" + pos[1]); // MODIFY THIS
                     model.click(pos[0], pos[1]);
 
                 } else {
@@ -81,14 +80,11 @@ public class GameController implements ActionListener, ItemListener {
      *            the ItemEvent
      */
 
-    public void  itemStateChanged(ItemEvent e){
+    public void itemStateChanged(ItemEvent e){
 
-        solutionMode = (e.getStateChange() == 1) ? true : false;
-
-        if (solutionMode)
-            model.setSolution();
-
-        System.out.println("Checkbox: " + solutionMode);
+        //solutionMode = (e.getStateChange() == 1) ? true : false;
+        solutionMode = view.solutionShown();
+        view.update();
     }
 
     //used to extract 2 integers from button actioncommand
