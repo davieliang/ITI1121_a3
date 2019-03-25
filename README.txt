@@ -1,9 +1,3 @@
-RUN GAME:
-- 02: In 02 directory, run java *.java and then javac Lightsout <number of rows> <number of columns>
-
-TO DO LIST:
-- 02: improve GUI
-
 ITI 1121
 Melvin Sam, 300090867, A04
 Christian Cook, 300083211, A03 

@@ -79,6 +79,7 @@ public class GameView extends JFrame {
         add(buttonsPanel, BorderLayout.WEST);
         add(optionPanel, BorderLayout.EAST);
         add(numOfStepsLabel, BorderLayout.SOUTH);
+
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);

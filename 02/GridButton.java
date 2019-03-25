@@ -27,6 +27,9 @@ public class GridButton extends JButton {
         setActionCommand("#" + row + ":" + column + "");
         this.column = column;
         this.row = row;
+
+        setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+        setContentAreaFilled(false);
         setIcon(new ImageIcon(OFF_NO_SOLUTION));
     }
 
